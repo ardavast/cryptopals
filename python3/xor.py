@@ -6,7 +6,7 @@ from itertools import cycle
 
 def xor(bs1, bs2):
     """XOR the bytes-like objects bs1 and bs2.
-    If one of the objects is larger in size it will be XORed against repeating
+    If one of the objects is larger in size it will be XORed against repeated
     copies of the smaller object.
     """
     if len(bs1) < len(bs2):

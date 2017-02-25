@@ -14,7 +14,7 @@ hs2 = '686974207468652062756c6c277320657965'
 
 bs1 = unhexlify(hs1)
 bs2 = unhexlify(hs2)
-bs3 = xor(bs1, bs2)
-hs3 = hexlify(bs3)
 
-print(hs3.decode('utf8'))
+bs3 = xor(bs1, bs2)
+
+print(hexlify(bs3).decode('utf8'))

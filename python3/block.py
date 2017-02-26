@@ -9,6 +9,11 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 
 
+def pkcs7_pad(s, psize):
+    pad = psize - (len(s) % psize)
+    return s + bytes([pad]) * pad
+
+
 def pkcs7_unpad(s):
     psize = s[-1]
     if psize == 0 or s[-psize:] != bytes([psize]) * psize:

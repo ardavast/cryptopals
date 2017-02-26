@@ -23,6 +23,14 @@ def pkcs7_unpad(s):
     return s[:-psize]
 
 
+def ecb_encrypt(p, k):
+    if len(p) % 16 != 0 or len(k) not in (16, 24, 32):
+        raise ValueError
+    encryptor = Cipher(algorithms.AES(k), modes.ECB(), default_backend())
+    encryptor = encryptor.encryptor()
+    return encryptor.update(p) + encryptor.finalize()
+
+
 def ecb_decrypt(c, k):
     if len(c) % 16 != 0 or len(k) not in (16, 24, 32):
         raise ValueError
@@ -37,6 +45,19 @@ def ecb_detect(c):
     cblocks = [bytes(cblock) for cblock in chunked(c, 16)]
     [(pattern, count)] = Counter(cblocks).most_common(1)
     return count > 1
+
+
+def cbc_encrypt(p, k, iv):
+    if len(p) % 16 != 0 or len(k) not in (16, 24, 32) or len(iv) != 16:
+        raise ValueError
+    c = b''
+    prev_cblock = iv
+    for pblock in chunked(p, 16):
+        pblock = bytes(pblock)
+        cblock = ecb_encrypt(xor(pblock, prev_cblock), k)
+        prev_cblock = cblock
+        c += cblock
+    return c
 
 
 def cbc_decrypt(c, k, iv):

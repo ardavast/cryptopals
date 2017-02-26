@@ -12,7 +12,7 @@ from block import ecb_detect
 
 with open('s01c08.txt', 'r') as f:
     for line in f:
-        hc = line.rstrip('\n')
-        c = unhexlify(hc)
+        chs = line.rstrip('\n')
+        c = unhexlify(chs)
         if ecb_detect(c):
-            print(hc)
+            print(chs)

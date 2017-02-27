@@ -12,10 +12,12 @@ from base64 import b64decode
 from block import pkcs7_pad, ecb_encrypt, ecb_detect
 
 KEYSIZE = 16
+
 cb64s = ('Um9sbGluJyBpbiBteSA1LjAKV2l0aCBteSByYWctdG9wIGRvd24gc28gbXkgaGFpciBj'
          'YW4gYmxvdwpUaGUgZ2lybGllcyBvbiBzdGFuZGJ5IHdhdmluZyBqdXN0IHRvIHNheSBo'
          'aQpEaWQgeW91IHN0b3A/IE5vLCBJIGp1c3QgZHJvdmUgYnkK')
 k = os.urandom(KEYSIZE)
+
 
 c = b64decode(cb64s)
 

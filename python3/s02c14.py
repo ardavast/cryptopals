@@ -20,7 +20,6 @@ PREFIX_MAX_SIZE = 128
 KEYSIZE = 16
 
 prefix = os.urandom(randint(PREFIX_MIN_SIZE, PREFIX_MAX_SIZE))
-print(prefix)
 cb64s = ('Um9sbGluJyBpbiBteSA1LjAKV2l0aCBteSByYWctdG9wIGRvd24gc28gbXkgaGFpciBj'
          'YW4gYmxvdwpUaGUgZ2lybGllcyBvbiBzdGFuZGJ5IHdhdmluZyBqdXN0IHRvIHNheSBo'
          'aQpEaWQgeW91IHN0b3A/IE5vLCBJIGp1c3QgZHJvdmUgYnkK')

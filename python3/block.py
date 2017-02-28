@@ -19,21 +19,25 @@ def pkcs7_pad(s, psize):
 def pkcs7_unpad(s):
     psize = s[-1]
     if psize == 0 or s[-psize:] != bytes([psize]) * psize:
-        raise ValueError
+        raise Exception('InvalidPadding')
     return s[:-psize]
 
 
 def ecb_encrypt(p, k):
-    if len(p) % 16 != 0 or len(k) not in (16, 24, 32):
-        raise ValueError
+    if len(k) not in (16, 24, 32):
+        raise Exception('InvalidKeyLength')
+    if len(p) % 16 != 0:
+        raise Exception('InvalidPlaintextLength')
     encryptor = Cipher(algorithms.AES(k), modes.ECB(), default_backend())
     encryptor = encryptor.encryptor()
     return encryptor.update(p) + encryptor.finalize()
 
 
 def ecb_decrypt(c, k):
-    if len(c) % 16 != 0 or len(k) not in (16, 24, 32):
-        raise ValueError
+    if len(k) not in (16, 24, 32):
+        raise Exception('InvalidKeyLength')
+    if len(c) % 16 != 0:
+        raise Exception('InvalidCiphertextLength')
     decryptor = Cipher(algorithms.AES(k), modes.ECB(), default_backend())
     decryptor = decryptor.decryptor()
     return decryptor.update(c) + decryptor.finalize()
@@ -41,15 +45,19 @@ def ecb_decrypt(c, k):
 
 def ecb_detect(c):
     if len(c) % 16 != 0:
-        raise ValueError
+        raise Exception('InvalidCiphertextLength')
     cblocks = [bytes(cblock) for cblock in chunked(c, 16)]
     [(pattern, count)] = Counter(cblocks).most_common(1)
     return count > 1
 
 
 def cbc_encrypt(p, k, iv):
-    if len(p) % 16 != 0 or len(k) not in (16, 24, 32) or len(iv) != 16:
-        raise ValueError
+    if len(k) not in (16, 24, 32):
+        raise Exception('InvalidKeyLength')
+    if len(p) % 16 != 0:
+        raise Exception('InvalidPlaintextLength')
+    if len(iv) != 16:
+        raise Exception('InvalidIVLength')
     c = b''
     prev_cblock = iv
     for pblock in chunked(p, 16):
@@ -61,8 +69,12 @@ def cbc_encrypt(p, k, iv):
 
 
 def cbc_decrypt(c, k, iv):
-    if len(c) % 16 != 0 or len(k) not in (16, 24, 32) or len(iv) != 16:
-        raise ValueError
+    if len(k) not in (16, 24, 32):
+        raise Exception('InvalidKeyLength')
+    if len(c) % 16 != 0:
+        raise Exception('InvalidCiphertextLength')
+    if len(iv) != 16:
+        raise Exception('InvalidIVLength')
     p = b''
     prev_cblock = iv
     for cblock in chunked(c, 16):

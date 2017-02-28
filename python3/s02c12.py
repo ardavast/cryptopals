@@ -18,7 +18,6 @@ cb64s = ('Um9sbGluJyBpbiBteSA1LjAKV2l0aCBteSByYWctdG9wIGRvd24gc28gbXkgaGFpciBj'
          'aQpEaWQgeW91IHN0b3A/IE5vLCBJIGp1c3QgZHJvdmUgYnkK')
 k = os.urandom(KEYSIZE)
 
-
 c = b64decode(cb64s)
 
 

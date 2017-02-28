@@ -13,6 +13,7 @@ import urllib
 from block import pkcs7_pad, pkcs7_unpad, ecb_encrypt, ecb_decrypt
 
 KEYSIZE = 16
+
 k = os.urandom(KEYSIZE)
 
 

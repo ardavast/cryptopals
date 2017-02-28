@@ -1,3 +1,11 @@
+#!/usr/bin/env python3
+# coding: utf-8
+
+"""
+CBC bitflipping attacks.
+https://cryptopals.com/sets/2/challenges/16
+"""
+
 import os
 import urllib
 
@@ -9,7 +17,7 @@ from block import pkcs7_pad, pkcs7_unpad, cbc_encrypt, cbc_decrypt
 
 KEYSIZE = 16
 
-k = os.urandom(16)
+k = os.urandom(KEYSIZE)
 iv = os.urandom(16)
 
 

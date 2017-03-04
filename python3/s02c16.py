@@ -36,7 +36,7 @@ def decrypt_and_verify(e):
 
 def flip(e, current_string, desired_string, off):
     e = list(e)
-    for i in range(0, len(desired_string)):
+    for i in range(len(desired_string)):
         e[off + i] ^= current_string[i] ^ desired_string[i]
     return bytes(e)
 

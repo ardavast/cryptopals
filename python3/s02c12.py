@@ -42,7 +42,7 @@ def ecb_crack_block(blocksize, p):
     for i in range(1, blocksize + 1):
         crafted_block = b'X' * (blocksize - i)
         c0 = encryption_oracle(crafted_block)
-        for b in range(0, 255 + 1):
+        for b in range(255 + 1):
             b = bytes([b])
             c = encryption_oracle(crafted_block + p + pblock + b)
             if c[target_bytes] == c0[target_bytes]:
